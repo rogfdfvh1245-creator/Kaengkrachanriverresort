@@ -293,13 +293,14 @@ src="https://github.com/rogfdfvh1245-creator/Kaengkrachanriverresort/blob/main/i
 จองห้องพัก
 </h2>
 
-<form class="fade-up bg-white p-8 rounded-3xl shadow-xl">
+<div class="fade-up bg-white p-8 rounded-3xl shadow-xl">
 
 <div class="grid md:grid-cols-2 gap-6">
 
 <div>
 <label class="font-semibold">ชื่อผู้จอง</label>
 <input
+id="name"
 type="text"
 placeholder="กรอกชื่อของคุณ"
 class="w-full border p-4 rounded-xl mt-2">
@@ -308,6 +309,7 @@ class="w-full border p-4 rounded-xl mt-2">
 <div>
 <label class="font-semibold">เบอร์โทรศัพท์</label>
 <input
+id="phone"
 type="tel"
 placeholder="08x-xxx-xxxx"
 class="w-full border p-4 rounded-xl mt-2">
@@ -316,6 +318,7 @@ class="w-full border p-4 rounded-xl mt-2">
 <div>
 <label class="font-semibold">วันเข้าพัก</label>
 <input
+id="checkin"
 type="date"
 class="w-full border p-4 rounded-xl mt-2">
 </div>
@@ -323,6 +326,7 @@ class="w-full border p-4 rounded-xl mt-2">
 <div>
 <label class="font-semibold">วันออก</label>
 <input
+id="checkout"
 type="date"
 class="w-full border p-4 rounded-xl mt-2">
 </div>
@@ -330,6 +334,7 @@ class="w-full border p-4 rounded-xl mt-2">
 <div>
 <label class="font-semibold">จำนวนผู้เข้าพัก</label>
 <input
+id="guests"
 type="number"
 placeholder="จำนวนคน"
 class="w-full border p-4 rounded-xl mt-2">
@@ -337,10 +342,14 @@ class="w-full border p-4 rounded-xl mt-2">
 
 <div>
 <label class="font-semibold">ประเภทห้องพัก</label>
-<select class="w-full border p-4 rounded-xl mt-2">
-<option>ห้องสแตนดาร์ด</option>
-<option>ห้องครอบครัว</option>
-<option>บ้านพักหมู่คณะ</option>
+<select
+id="room"
+class="w-full border p-4 rounded-xl mt-2">
+
+<option>ห้องสแตนดาร์ด (2 ท่าน)</option>
+<option>ห้องครอบครัว (8 ท่าน)</option>
+<option>บ้านพักหมู่คณะ (16 ท่าน)</option>
+
 </select>
 </div>
 
@@ -350,22 +359,62 @@ class="w-full border p-4 rounded-xl mt-2">
 <label class="font-semibold">รายละเอียดเพิ่มเติม</label>
 
 <textarea
+id="detail"
 rows="5"
 placeholder="แจ้งรายละเอียดเพิ่มเติม"
 class="w-full border p-4 rounded-xl mt-2"></textarea>
 
 </div>
 
-<button
-type="submit"
-class="btn-hover mt-6 bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-full font-bold">
-ส่งข้อมูลการจอง </button>
+<a
+href="https://line.me/ti/p/D4WQKf1adx"
+target="_blank"
+class="inline-block mt-6 bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-full font-bold">
 
-</form>
+จองผ่าน LINE
+
+</a>
+
+</button>
+
+</div>
 
 </div>
 
 </section>
+
+<script>
+
+const name = document.getElementById("name").value;
+const phone = document.getElementById("phone").value;
+const checkin = document.getElementById("checkin").value;
+const checkout = document.getElementById("checkout").value;
+const guests = document.getElementById("guests").value;
+const room = document.getElementById("room").value;
+const detail = document.getElementById("detail").value;
+
+const message =
+`🏡 จองห้องพัก แก่งกระจานริเวอร์ รีสอร์ท
+
+ชื่อผู้จอง: ${name}
+เบอร์โทร: ${phone}
+วันเข้าพัก: ${checkin}
+วันออก: ${checkout}
+จำนวนผู้เข้าพัก: ${guests}
+ประเภทห้อง: ${room}
+
+รายละเอียดเพิ่มเติม:
+${detail}`;
+
+window.open(
+"https://line.me/R/msg/text/?" + encodeURIComponent(message),
+"_blank"
+);
+
+}
+
+</script>
+
 
 <section id="contact" class="py-24">
 
@@ -504,3 +553,16 @@ behavior:'smooth'
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
