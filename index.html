@@ -520,43 +520,37 @@ behavior:'smooth'
 </script>
 
 <script>
+async function sendBooking() {
 
-async function sendBooking(){
+  const data = {
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    checkin: document.getElementById("checkin").value,
+    checkout: document.getElementById("checkout").value,
+    guests: document.getElementById("guests").value,
+    room: document.getElementById("room").value,
+    detail: document.getElementById("detail").value
+  };
 
-const data = {
-name: document.getElementById("name").value,
-phone: document.getElementById("phone").value,
-checkin: document.getElementById("checkin").value,
-checkout: document.getElementById("checkout").value,
-guests: document.getElementById("guests").value,
-room: document.getElementById("room").value,
-detail: document.getElementById("detail").value
-};
+  try {
 
-try {
+    await fetch(
+      "https://script.google.com/macros/s/AKfycbw36kV0RZ3r6bMR906mqxAGmzSqACljang26cns-uGCj6HAOFZjkoenLFj3ujNcU0BR8w/exec",
+      {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify(data)
+      }
+    );
 
-fetch(
-"https://script.google.com/macros/s/AKfycbzXfB3iSoRcxU2pXUo9Qg1chvNjKaY9Imai2KhoOfj_vtVmkxdr4OhLRHeR4-P5bjsaKw/exec",
-{
-method: "POST",
-mode: "no-cors",
-headers: {
-"Content-Type": "application/json"
-},
-body: JSON.stringify(data)
+    alert("ส่งข้อมูลการจองเรียบร้อย");
+
+  } catch (error) {
+
+    alert("เกิดข้อผิดพลาด");
+
+  }
 }
-);
-
-alert("ส่งข้อมูลการจองเรียบร้อย");
-
-} catch(error){
-
-alert("เกิดข้อผิดพลาด: " + error);
-
-}
-
-}
-
 </script>
 
 </body>
