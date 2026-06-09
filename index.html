@@ -383,40 +383,6 @@ class="inline-block mt-6 bg-green-600 hover:bg-green-700 text-white px-8 py-4 ro
 
 </section>
 
-<script>
-
-async function sendBooking(){
-
-const name = document.getElementById("name").value;
-const phone = document.getElementById("phone").value;
-const checkin = document.getElementById("checkin").value;
-const checkout = document.getElementById("checkout").value;
-const guests = document.getElementById("guests").value;
-const room = document.getElementById("room").value;
-const detail = document.getElementById("detail").value;
-
-const message =
-`🏡 จองห้องพัก แก่งกระจานริเวอร์ รีสอร์ท
-
-ชื่อผู้จอง: ${name}
-เบอร์โทร: ${phone}
-วันเข้าพัก: ${checkin}
-วันออก: ${checkout}
-จำนวนผู้เข้าพัก: ${guests}
-ประเภทห้อง: ${room}
-
-รายละเอียดเพิ่มเติม:
-${detail}`;
-
-window.open(
-"https://line.me/R/msg/text/?" + encodeURIComponent(message),
-"_blank"
-);
-
-}
-
-</script>
-
 
 <section id="contact" class="py-24">
 
@@ -569,10 +535,11 @@ detail: document.getElementById("detail").value
 
 try {
 
-const response = await fetch(
+fetch(
 "https://script.google.com/macros/s/AKfycbzXfB3iSoRcxU2pXUo9Qg1chvNjKaY9Imai2KhoOfj_vtVmkxdr4OhLRHeR4-P5bjsaKw/exec",
 {
 method: "POST",
+mode: "no-cors",
 headers: {
 "Content-Type": "application/json"
 },
