@@ -717,18 +717,29 @@ duration:1000
 
 const api="https://script.google.com/macros/s/AKfycbxrkfRyxKgiqn1-Drq55XDlWa9gZ9giQc8jf8l5VoAY3shGJzd9DaaRIuSg-GnPOWs/exec";
 
-async function loadVisitors(){
+async function loadVisitors() {
 
-const url = api + "?action=visit";
+  try {
 
-const res=await fetch(url);
+    const url = api + "?action=visit";
 
-const data=await res.json();
+    const res = await fetch(url);
 
-animateNumber(data.visitors);
+    const data = await res.json();
+
+    console.log(data);
+
+    animateNumber(data.visitors);
+
+  } catch (err) {
+
+    console.error(err);
+
+    document.getElementById("visitorCount").innerText = "ERROR";
+
+  }
 
 }
-
 function animateNumber(target){
 
 const element=document.getElementById("visitorCount");
