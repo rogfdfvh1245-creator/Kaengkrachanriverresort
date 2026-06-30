@@ -719,19 +719,7 @@ const api="https://script.google.com/macros/s/AKfycbxrkfRyxKgiqn1-Drq55XDlWa9gZ9
 
 async function loadVisitors(){
 
-let firstVisit=false;
-
-if(!localStorage.getItem("visited")){
-
-localStorage.setItem("visited","true");
-
-firstVisit=true;
-
-}
-
-const url=firstVisit
-?api+"?action=visit"
-:api;
+const url = api + "?action=visit";
 
 const res=await fetch(url);
 
