@@ -537,6 +537,28 @@ loading="lazy">
 
 </section>
 
+<section class="py-10 bg-white">
+
+<div class="max-w-7xl mx-auto text-center">
+
+<h3 class="text-2xl font-bold text-emerald-700">
+
+👁 ผู้เข้าชมเว็บไซต์
+
+</h3>
+
+<p
+id="visitorCount"
+class="text-5xl font-bold mt-5 text-gray-800">
+
+0
+
+</p>
+
+</div>
+
+</section>
+
 <footer class="bg-gray-900 text-white py-16">
 
 <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-10">
@@ -688,6 +710,66 @@ duration:1000
 );
 
 });
+
+</script>
+
+<script>
+
+const api="https://script.google.com/macros/s/AKfycbxrkfRyxKgiqn1-Drq55XDlWa9gZ9giQc8jf8l5VoAY3shGJzd9DaaRIuSg-GnPOWs/exec";
+
+async function loadVisitors(){
+
+let firstVisit=false;
+
+if(!localStorage.getItem("visited")){
+
+localStorage.setItem("visited","true");
+
+firstVisit=true;
+
+}
+
+const url=firstVisit
+?api+"?action=visit"
+:api;
+
+const res=await fetch(url);
+
+const data=await res.json();
+
+animateNumber(data.visitors);
+
+}
+
+function animateNumber(target){
+
+const element=document.getElementById("visitorCount");
+
+let start=0;
+
+const duration=1200;
+
+const step=Math.ceil(target/(duration/16));
+
+const timer=setInterval(()=>{
+
+start+=step;
+
+if(start>=target){
+
+start=target;
+
+clearInterval(timer);
+
+}
+
+element.innerText=start.toLocaleString();
+
+},16);
+
+}
+
+window.addEventListener("load",loadVisitors);
 
 </script>
 
