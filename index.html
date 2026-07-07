@@ -471,6 +471,85 @@ class="inline-block mt-6 bg-green-600 hover:bg-green-700 text-white px-8 py-4 ro
 
 </section>
 
+<section id="reviews" class="py-24 bg-gray-100">
+
+<div class="max-w-5xl mx-auto px-6">
+
+<h2 class="text-4xl font-bold text-center text-emerald-800 mb-12">
+รีวิวจากผู้เข้าพัก
+</h2>
+
+<div class="bg-white rounded-3xl shadow-xl p-8">
+
+<div class="grid md:grid-cols-2 gap-6">
+
+<div>
+<label class="font-semibold">ชื่อผู้รีวิว</label>
+<input
+id="reviewName"
+type="text"
+placeholder="กรอกชื่อ"
+class="w-full border p-4 rounded-xl mt-2">
+</div>
+
+<div>
+<label class="font-semibold">ให้คะแนน</label>
+
+<select
+id="reviewRating"
+class="w-full border p-4 rounded-xl mt-2">
+
+<option value="5">⭐⭐⭐⭐⭐ ดีมาก</option>
+<option value="4">⭐⭐⭐⭐ ดี</option>
+<option value="3">⭐⭐⭐ พอใช้</option>
+<option value="2">⭐⭐ ควรปรับปรุง</option>
+<option value="1">⭐ แย่</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="mt-6">
+
+<label class="font-semibold">
+เขียนรีวิว
+</label>
+
+<textarea
+id="reviewText"
+rows="5"
+placeholder="แบ่งปันประสบการณ์ของคุณ..."
+class="w-full border p-4 rounded-xl mt-2"></textarea>
+
+</div>
+
+<button
+type="button"
+onclick="sendReview()"
+class="mt-6 bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-full font-bold">
+
+ส่งรีวิว
+
+</button>
+
+<p id="reviewStatus" class="mt-4"></p>
+
+<hr class="my-10">
+
+<h3 class="text-2xl font-bold mb-6">
+รีวิวล่าสุด
+</h3>
+
+<div id="reviewList"></div>
+
+</div>
+
+</div>
+
+</section>
+
 
 <section id="contact" class="py-24">
 
@@ -770,6 +849,126 @@ element.innerText=start.toLocaleString();
 
 window.addEventListener("load",loadVisitors);
 
+</script>
+
+<script>
+
+function sendReview(){
+
+alert("ต่อไปจะเชื่อมกับ Google Sheet");
+
+}
+
+</script>
+
+<script>
+const REVIEW_API = "https://script.google.com/macros/s/AKfycbzcn-VQVsE-Bg1qcjYcrZwsXDUi356hZ8c9RzUTs6jhah2ZglgGiU6Sho7LWlkEHr6HoQ/exec";
+
+async function sendReview(){
+
+    const data = {
+
+        name: document.getElementById("reviewName").value,
+
+        rating: document.getElementById("reviewRating").value,
+
+        review: document.getElementById("reviewText").value
+
+    };
+
+    if(data.name=="" || data.review==""){
+
+        alert("กรุณากรอกข้อมูลให้ครบ");
+
+        return;
+
+    }
+
+    try{
+
+        await fetch(REVIEW_API,{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"text/plain;charset=utf-8"
+            },
+
+            body:JSON.stringify(data)
+
+        });
+
+        document.getElementById("reviewStatus").innerHTML=
+        "<span style='color:green'>ส่งรีวิวเรียบร้อย</span>";
+
+        document.getElementById("reviewName").value="";
+        document.getElementById("reviewRating").value="5";
+        document.getElementById("reviewText").value="";
+
+        loadReviews();
+
+    }catch(err){
+
+        document.getElementById("reviewStatus").innerHTML=
+        "<span style='color:red'>ส่งไม่สำเร็จ</span>";
+
+    }
+
+}
+
+
+
+async function loadReviews(){
+
+    try{
+
+        const res=await fetch(REVIEW_API);
+
+        const reviews=await res.json();
+
+        const box=document.getElementById("reviewList");
+
+        box.innerHTML="";
+
+        reviews.forEach(r=>{
+
+            box.innerHTML+=`
+
+            <div class="bg-white rounded-2xl shadow-lg p-6 mb-5">
+
+                <h4 class="font-bold text-xl">${r.name}</h4>
+
+                <div class="text-yellow-500 text-lg">
+
+                    ${"⭐".repeat(Number(r.rating))}
+
+                </div>
+
+                <p class="mt-3 text-gray-600">
+
+                    ${r.review}
+
+                </p>
+
+            </div>
+
+            `;
+
+        });
+
+    }catch(err){
+
+        console.log(err);
+
+    }
+
+}
+
+window.onload=function(){
+
+    loadReviews();
+
+}
 </script>
 
 </body>
